@@ -106,10 +106,9 @@ const findAllTransactionsByWalletId = async (walletId) => {
     WHERE t.wallet_id = $1 OR t.recipient_wallet_id = $1;
     `;
     const result = await client.query(query, [walletId]);
-    console.log(result.rows);
+
     return result.rows[0];
   } catch (error) {
-    console.log(error.message);
     throw new Error("Something went wrong while fetching transactions");
   } finally {
     client.release();

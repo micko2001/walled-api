@@ -8,19 +8,17 @@ const {
 } = require("../dto/customErrors");
 
 const createUser = async (userData) => {
-  console.log(userData);
   const existingUser = await userRepository.findUserByEmail(userData.email);
 
   if (existingUser.rows.length > 0) {
     throw new UserAlreadyExistsError();
   }
-  console.log("cek");
 
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(userData.password, salt);
 
   const newUser = { ...userData, password: hashedPassword };
-  console.log(userData);
+
   const createdUser = await userRepository.createUser(newUser);
   return createdUser;
 };
@@ -31,7 +29,7 @@ const login = async (userData) => {
   if (!user) {
     throw new AuthenticationError();
   }
-  console.log(user.password);
+
   const isPasswordMatched = await bcrypt.compare(
     userData.password,
     user.password
@@ -62,7 +60,7 @@ const getUserById = async (id) => {
       balance: user.balance,
     },
   };
-  console.log(data);
+
   return {
     ...user,
     wallet: {
