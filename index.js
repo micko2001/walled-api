@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const userRouter = require("./routers/users.router");
+const transactionRouter = require("./routers/transactions.router");
 
 const app = express();
 const port = 8080;
@@ -17,6 +18,7 @@ app.use(
 );
 
 app.use(userRouter);
+app.use(transactionRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
